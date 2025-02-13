@@ -1,0 +1,16 @@
+Conclusiones de la Automatización E2E - SauceDemo
+1. Resultados de la Automatización
+La automatización fue implementada con éxito utilizando Cypress.
+El flujo de compra desde el inicio de sesión hasta la confirmación de compra "THANK YOU FOR YOUR ORDER" se ejecutó sin errores.
+Se validaron correctamente los estados de la aplicación en cada paso del flujo de compra.
+
+2. Hallazgos Relevantes
+- Autenticación: La aplicación permite el login con las credenciales proporcionadas sin restricciones. 
+- Gestión del Carrito: Se verificó que los productos se agregan correctamente al carrito.
+- Proceso de Compra: Al completar la compra, se muestra el mensaje de confirmación esperado.
+
+3. Posibles Mejoras y Consideraciones:
+- Se podría agregar una validación adicional para manejar escenarios donde el usuario intenta finalizar la compra sin productos en el carrito.
+
+4. Conclusión Final
+- La automatización del flujo de compra en SauceDemo fue exitosa, cumpliendo con todos los pasos requeridos. Se logró una ejecución estable y confiable, validando tanto el comportamiento esperado como posibles mejoras en el sistema.

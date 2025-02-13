@@ -1,0 +1,16 @@
+Conclusiones de las Pruebas de API - DemoBlaze
+1. Resultados de las Pruebas
+✅ Signup - Nuevo usuario: La API permite registrar un nuevo usuario correctamente y responde con un código 200.
+❌ Signup - Usuario existente: El sistema no permite registrar un usuario duplicado, pero devuelve un código 200 en lugar de un código de error adecuado (como 400).
+✅ Login - Credenciales válidas: El usuario puede autenticarse correctamente con credenciales correctas y la API devuelve un token de sesión.
+❌ Login - Credenciales incorrectas: El sistema no permite iniciar sesion a un usuario duplicado o invalido, pero devuelve un código 200 en lugar de un código de error adecuado (como 400).
+
+2. Hallazgos y Observaciones
+🔹 Manejo de Errores: La API debería retornar códigos de estado más adecuados en ciertos casos (ejemplo: 400 Conflict para usuarios duplicados o usuarios inexistentes).
+🔹 Al momento de devolver el token de acceso, seria buena practica utilizar objetos en el Json, no un string. 
+🔹 Seguridad: No se observó una política clara sobre la expiración del token de sesión o si tiene mecanismos de seguridad para prevenir ataques de fuerza bruta.
+
+3. Recomendaciones
+✔️ Mejorar la documentación de la API con respuestas esperadas y códigos de estado adecuados.
+✔️ Implementar validaciones más estrictas en los endpoints para mejorar la seguridad y evitar ataques de fuerza bruta.
+✔️ Agregar logs detallados en respuestas de error para facilitar el debugging sin comprometer la seguridad.
