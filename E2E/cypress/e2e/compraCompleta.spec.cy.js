@@ -2,6 +2,7 @@ import LoginPage from '../support/pages/LoginPage'
 import ProductPage from '../support/pages/ProductPage'
 import CartPage from '../support/pages/CartPage'
 import CheckoutPage from '../support/pages/CheckoutPage'
+import compraData from '../fixtures/compraData.json';
 
 
 describe('Flujo de compra', () => {
@@ -13,8 +14,8 @@ describe('Flujo de compra', () => {
   it('Flujo completo de compra - Datos validos', () => {
     loginPage.visit()
     loginPage.verifyText("Swag Labs")
-    loginPage.fillUsername('standard_user')
-    loginPage.fillPassword('secret_sauce')
+    loginPage.fillUsername(compraData.valid.username)
+    loginPage.fillPassword(compraData.valid.password)
     loginPage.clickLogin()
 
     productPage.waitForElement('.app_logo')
@@ -26,9 +27,9 @@ describe('Flujo de compra', () => {
     cartPage.checkout("Your Cart")
 
     productPage.waitForElement('.title')
-    checkoutPage.fillFirstName('Reymon')
-    checkoutPage.fillLastName('Mendez')
-    checkoutPage.fillPostal('123456')
+    checkoutPage.fillFirstName(compraData.valid.firstName)
+    checkoutPage.fillLastName(compraData.valid.lastName)
+    checkoutPage.fillPostal(compraData.valid.postalCode)
     checkoutPage.clickContinue()
     productPage.waitForElement('.title')
     checkoutPage.clickFinish()
@@ -38,8 +39,8 @@ describe('Flujo de compra', () => {
   it('Flujo completo de compra - Login invalido', () => {
     loginPage.visit()
     loginPage.verifyText("Swag Labs")
-    loginPage.fillUsername('standard')
-    loginPage.fillPassword('secret_sauce')
+    loginPage.fillUsername(compraData.invalidLogin.username)
+    loginPage.fillPassword(compraData.invalidLogin.password)
     loginPage.clickLogin()
     loginPage.waitForElement('h3[data-test="error"]')
   })
@@ -47,8 +48,8 @@ describe('Flujo de compra', () => {
   it('Flujo completo de compra - Sin articulos en el carrito', () => {
     loginPage.visit()
     loginPage.verifyText("Swag Labs")
-    loginPage.fillUsername('standard_user')
-    loginPage.fillPassword('secret_sauce')
+    loginPage.fillUsername(compraData.valid.username)
+    loginPage.fillPassword(compraData.valid.password)
     loginPage.clickLogin()
 
     productPage.waitForElement('.app_logo')
@@ -58,9 +59,9 @@ describe('Flujo de compra', () => {
     cartPage.checkout("Your Cart")
 
     productPage.waitForElement('.title')
-    checkoutPage.fillFirstName('Reymon')
-    checkoutPage.fillLastName('Mendez')
-    checkoutPage.fillPostal('123456')
+    checkoutPage.fillFirstName(compraData.valid.firstName)
+    checkoutPage.fillLastName(compraData.valid.lastName)
+    checkoutPage.fillPostal(compraData.valid.postalCode)
     checkoutPage.clickContinue()
     productPage.waitForElement('.title')
     checkoutPage.clickFinish()
@@ -70,8 +71,8 @@ describe('Flujo de compra', () => {
   it('Flujo completo de compra - Sin completar el formulario de checkout y tratar de continuar', () => {
     loginPage.visit()
     loginPage.verifyText("Swag Labs")
-    loginPage.fillUsername('standard_user')
-    loginPage.fillPassword('secret_sauce')
+    loginPage.fillUsername(compraData.valid.username)
+    loginPage.fillPassword(compraData.valid.password)
     loginPage.clickLogin()
 
     productPage.waitForElement('.app_logo')

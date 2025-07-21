@@ -1,0 +1,13 @@
+{
+  "valid": {
+    "username": "standard_user",
+    "password": "secret_sauce",
+    "firstName": "Reymon",
+    "lastName": "Mendez",
+    "postalCode": "123456"
+  },
+  "invalidLogin": {
+    "username": "standard",
+    "password": "secret_sauce"
+  }
+}
