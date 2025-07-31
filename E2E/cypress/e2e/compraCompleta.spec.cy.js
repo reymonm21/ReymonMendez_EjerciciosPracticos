@@ -2,8 +2,7 @@ import LoginPage from '../support/pages/LoginPage'
 import ProductPage from '../support/pages/ProductPage'
 import CartPage from '../support/pages/CartPage'
 import CheckoutPage from '../support/pages/CheckoutPage'
-import compraData from '../fixtures/compraData.json';
-
+import compraData from '../fixtures/compraData.json'
 
 describe('Flujo de compra', () => {
   const loginPage = new LoginPage()
@@ -11,32 +10,41 @@ describe('Flujo de compra', () => {
   const cartPage = new CartPage()
   const checkoutPage = new CheckoutPage()
 
-  it('Flujo completo de compra - Datos validos', () => {
+  const login = (username, password) => {
     loginPage.visit()
     loginPage.verifyText("Swag Labs")
-    loginPage.fillUsername(compraData.valid.username)
-    loginPage.fillPassword(compraData.valid.password)
+    loginPage.fillUsername(username)
+    loginPage.fillPassword(password)
     loginPage.clickLogin()
-
     productPage.waitForElement('.app_logo')
+  }
+
+  const fillCheckoutForm = (data) => {
+    checkoutPage.fillFirstName(data.firstName)
+    checkoutPage.fillLastName(data.lastName)
+    checkoutPage.fillPostal(data.postalCode)
+    checkoutPage.clickContinue()
+    productPage.waitForElement('.title')
+  }
+
+  it('Flujo completo de compra - Datos válidos', () => {
+    login(compraData.valid.username, compraData.valid.password)
+
     productPage.addFirstProductCart()
     productPage.addSecondProductCart()
     productPage.goCart()
-    
+
     cartPage.waitForElement('.title')
     cartPage.checkout("Your Cart")
 
     productPage.waitForElement('.title')
-    checkoutPage.fillFirstName(compraData.valid.firstName)
-    checkoutPage.fillLastName(compraData.valid.lastName)
-    checkoutPage.fillPostal(compraData.valid.postalCode)
-    checkoutPage.clickContinue()
-    productPage.waitForElement('.title')
+    fillCheckoutForm(compraData.valid)
+
     checkoutPage.clickFinish()
     checkoutPage.verifyText('Thank you for your order')
   })
 
-  it('Flujo completo de compra - Login invalido', () => {
+  it('Flujo completo de compra - Login inválido', () => {
     loginPage.visit()
     loginPage.verifyText("Swag Labs")
     loginPage.fillUsername(compraData.invalidLogin.username)
@@ -45,39 +53,24 @@ describe('Flujo de compra', () => {
     loginPage.waitForElement('h3[data-test="error"]')
   })
 
-  it('Flujo completo de compra - Sin articulos en el carrito', () => {
-    loginPage.visit()
-    loginPage.verifyText("Swag Labs")
-    loginPage.fillUsername(compraData.valid.username)
-    loginPage.fillPassword(compraData.valid.password)
-    loginPage.clickLogin()
+  it('Flujo completo de compra - Sin artículos en el carrito', () => {
+    login(compraData.valid.username, compraData.valid.password)
 
-    productPage.waitForElement('.app_logo')
     productPage.goCart()
-    
     cartPage.waitForElement('.title')
     cartPage.checkout("Your Cart")
 
     productPage.waitForElement('.title')
-    checkoutPage.fillFirstName(compraData.valid.firstName)
-    checkoutPage.fillLastName(compraData.valid.lastName)
-    checkoutPage.fillPostal(compraData.valid.postalCode)
-    checkoutPage.clickContinue()
-    productPage.waitForElement('.title')
+    fillCheckoutForm(compraData.valid)
+
     checkoutPage.clickFinish()
     checkoutPage.verifyText('Thank you for your order')
   })
 
-  it('Flujo completo de compra - Sin completar el formulario de checkout y tratar de continuar', () => {
-    loginPage.visit()
-    loginPage.verifyText("Swag Labs")
-    loginPage.fillUsername(compraData.valid.username)
-    loginPage.fillPassword(compraData.valid.password)
-    loginPage.clickLogin()
+  it('Flujo completo de compra - Checkout incompleto', () => {
+    login(compraData.valid.username, compraData.valid.password)
 
-    productPage.waitForElement('.app_logo')
     productPage.goCart()
-    
     cartPage.waitForElement('.title')
     cartPage.checkout("Your Cart")
 
@@ -85,5 +78,4 @@ describe('Flujo de compra', () => {
     checkoutPage.clickContinue()
     checkoutPage.waitForElement('h3[data-test="error"]')
   })
-
 })
